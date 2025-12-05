@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../typescript/base.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": [],
+  "exclude": ["**/*.css", "node_modules", "dist"]
+}

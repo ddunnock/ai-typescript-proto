@@ -1,0 +1,1096 @@
+/**
+ * ConvergenceOS - Core Global Styles
+ *
+ * @fileoverview Base CSS with theme variable mappings and shared styles.
+ * Theme-specific colors are defined in separate theme files loaded dynamically.
+ *
+ * @module styles/globals
+ *
+ * @description
+ * This file contains:
+ * - Tailwind CSS v4 import
+ * - Theme variable mappings via @theme inline
+ * - Shared component animations
+ * - Base layer styles
+ * - Glassmorphism and utility classes
+ *
+ * @see {@link https://tailwindcss.com/docs/v4 Tailwind CSS v4 Documentation}
+ */
+
+/* ============================================================================
+   TAILWIND CSS V4 IMPORT
+   ============================================================================ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================================
+   SOURCE DIRECTIVES - Tell Tailwind where to scan for classes
+   ============================================================================ */
+
+@source "../../packages/ui/src/components/**/*.{ts,tsx}";
+@source "../../apps/storybook/src/**/*.{ts,tsx,mdx}";
+@source "../../apps/web/src/**/*.{ts,tsx}";
+
+/* ============================================================================
+   THEME VARIABLE MAPPINGS
+   ============================================================================ */
+
+/**
+ * @theme inline
+ *
+ * Maps CSS custom properties to Tailwind utilities. Using 'inline' allows
+ * dynamic variable resolution at runtime, enabling theme switching without
+ * rebuild. Theme files (convergence.css, synthwave.css) define the actual
+ * CSS variable values.
+ */
+@theme inline {
+  /* -------------------------------------------------------------------------
+     COLOR TOKENS
+     ------------------------------------------------------------------------- */
+
+  /* Core semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Sidebar colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Chart colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Glassmorphism colors */
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --color-glass-border: var(--glass-border);
+
+  /* Neon colors (for SynthWave theme) */
+  --color-neon-pink: var(--neon-pink);
+  --color-neon-cyan: var(--neon-cyan);
+  --color-neon-purple: var(--neon-purple);
+
+  /* -------------------------------------------------------------------------
+     SHADOW TOKENS
+     ------------------------------------------------------------------------- */
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow-default);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-glass: var(--glass-shadow);
+  --shadow-neon: var(--shadow-neon);
+
+  /* -------------------------------------------------------------------------
+     BORDER RADIUS TOKENS
+     ------------------------------------------------------------------------- */
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* -------------------------------------------------------------------------
+     SHARED COMPONENT ANIMATIONS
+     ------------------------------------------------------------------------- */
+
+  /* Hide animation - fade out */
+  --animate-hide: hide 150ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Slide animations with fade */
+  --animate-slide-down-and-fade: slideDownAndFade 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-left-and-fade: slideLeftAndFade 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-up-and-fade: slideUpAndFade 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-right-and-fade: slideRightAndFade 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Accordion animations */
+  --animate-accordion-open: accordionOpen 150ms cubic-bezier(0.87, 0, 0.13, 1);
+  --animate-accordion-close: accordionClose 150ms cubic-bezier(0.87, 0, 0.13, 1);
+
+  /* Dialog animations */
+  --animate-dialog-overlay-show: dialogOverlayShow 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-dialog-content-show: dialogContentShow 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Drawer animations */
+  --animate-drawer-slide-left-and-fade: drawerSlideLeftAndFade 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-drawer-slide-right-and-fade: drawerSlideRightAndFade 150ms ease-in;
+
+  /* -------------------------------------------------------------------------
+     ANIMATION KEYFRAMES
+     ------------------------------------------------------------------------- */
+
+  @keyframes hide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideDownAndFade {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideLeftAndFade {
+    from {
+      opacity: 0;
+      transform: translateX(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideUpAndFade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideRightAndFade {
+    from {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes accordionOpen {
+    from {
+      height: 0px;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordionClose {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0px;
+    }
+  }
+
+  @keyframes dialogOverlayShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes dialogContentShow {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -45%) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @keyframes drawerSlideLeftAndFade {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes drawerSlideRightAndFade {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* ============================================================================
+   FALLBACK THEME VALUES
+   ============================================================================
+
+   These provide default values before any theme CSS is loaded.
+   They should match the Convergence light theme defaults.
+*/
+
+:root {
+  /* Border radius */
+  --radius: 0.625rem;
+
+  /* Base colors - Light mode with dark text */
+  --background: transparent;
+  --foreground: oklch(0.15 0 0); /* Near black - dark text for light mode */
+  --card: transparent;
+  --card-foreground: oklch(0.15 0 0); /* Near black - dark text */
+  --popover: transparent;
+  --popover-foreground: oklch(0.15 0 0); /* Near black - dark text */
+
+  /* Primary colors - Light mode */
+  --primary: oklch(0.5 0.2 250); /* Blue */
+  --primary-foreground: oklch(0.98 0 0); /* White text on primary */
+
+  /* Secondary colors - Light mode */
+  --secondary: oklch(0.96 0 0); /* Very light gray */
+  --secondary-foreground: oklch(0.15 0 0); /* Dark text */
+
+  /* Muted colors - Light mode */
+  --muted: oklch(
+    0.85 0 0
+  ); /* Dark gray - darker shade to avoid glass effect override */
+  --muted-foreground: oklch(0.1 0 0); /* Medium gray text */
+
+  /* Accent colors - Light mode */
+  --accent: oklch(0.96 0 0); /* Very light gray */
+  --accent-foreground: oklch(0.15 0 0); /* Dark text */
+
+  /* Destructive colors - WCAG AA compliant (4.5:1 contrast) */
+  --destructive: oklch(0.55 0.22 25); /* Red - 4.5:1 with white */
+  --destructive-foreground: oklch(0.98 0 0); /* White text on red */
+
+  /* Border and input - WCAG AA compliant (3:1 for UI components) */
+  --border: oklch(0.88 0 0); /* Light gray - 3:1 contrast */
+  --input: oklch(0.88 0 0); /* Light gray - 3:1 contrast */
+  --ring: oklch(0.5 0.2 250); /* Blue ring - 3:1 contrast */
+
+  /* Chart colors - WCAG AA compliant */
+  --chart-1: oklch(0.6 0.2 250); /* Blue */
+  --chart-2: oklch(0.55 0.15 150); /* Green */
+  --chart-3: oklch(0.5 0.2 50); /* Yellow */
+  --chart-4: oklch(0.65 0.2 300); /* Purple */
+  --chart-5: oklch(0.6 0.2 20); /* Orange */
+
+  /* Sidebar colors - Light mode */
+  --sidebar: oklch(0.98 0 0); /* Near white */
+  --sidebar-foreground: oklch(0.15 0 0); /* Dark text */
+  --sidebar-primary: oklch(0.5 0.2 250); /* Blue */
+  --sidebar-primary-foreground: oklch(0.98 0 0); /* White text on primary */
+  --sidebar-accent: oklch(0.96 0 0); /* Very light gray */
+  --sidebar-accent-foreground: oklch(0.15 0 0); /* Dark text */
+  --sidebar-border: oklch(0.88 0 0); /* Light gray - 3:1 contrast */
+  --sidebar-ring: oklch(0.5 0.2 250); /* Blue ring - 3:1 contrast */
+
+  /* Apple-standard glassmorphism - Very subtle and refined */
+  /* Low opacity for Apple's standard glass effect */
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.12) 25%,
+    rgba(240, 248, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.11) 75%,
+    rgba(230, 240, 255, 0.12) 100%
+  );
+  /* Very subtle white border - Apple standard */
+  --glass-border: rgba(255, 255, 255, 0.12);
+  /* Minimal shadows with subtle inner glow - Apple standard */
+  --glass-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04),
+    0 0 0 0.5px rgba(255, 255, 255, 0.08) inset,
+    0 0 12px rgba(255, 255, 255, 0.1) inset;
+  --glass-shadow-lg:
+    0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.06),
+    0 0 0 0.5px rgba(255, 255, 255, 0.1) inset,
+    0 0 20px rgba(255, 255, 255, 0.12) inset;
+  --glass-shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.03),
+    0 0 0 0.5px rgba(255, 255, 255, 0.06) inset,
+    0 0 8px rgba(255, 255, 255, 0.08) inset;
+  --gradient: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+  /* Apple-standard blur values - moderate blur */
+  --blur: 10px;
+  --blur-sm: 10px;
+  --blur-lg: 10px;
+
+  /* Frosted glass variant - Enhanced opacity and stronger blur */
+  --glass-frosted-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.22) 25%,
+    rgba(240, 248, 255, 0.23) 50%,
+    rgba(255, 255, 255, 0.21) 75%,
+    rgba(230, 240, 255, 0.22) 100%
+  );
+  --glass-frosted-border: rgba(255, 255, 255, 0.3);
+  --glass-frosted-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 0.5px rgba(255, 255, 255, 0.15) inset,
+    0 0 20px rgba(255, 255, 255, 0.18) inset;
+  --blur-frosted: 25px;
+
+  /* Fluted glass variant - Vertical ridges pattern */
+  --glass-fluted-pattern: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.08) 0px,
+    rgba(255, 255, 255, 0.15) 4px,
+    rgba(255, 255, 255, 0.08) 8px,
+    rgba(255, 255, 255, 0.02) 10px,
+    rgba(255, 255, 255, 0.08) 12px
+  );
+
+  /* Crystal glass variant - Clear glass with highlights and glow */
+  --glass-crystal-bg: rgba(255, 255, 255, 0.3);
+  --glass-crystal-border: rgba(255, 255, 255, 0.3);
+  --glass-crystal-shadow:
+    0 0 20px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 255, 255, 0.1);
+  --glass-crystal-shadow-hover:
+    0 0 25px rgba(0, 0, 0, 0.3), 0 0 35px rgba(255, 255, 255, 0.15);
+  --blur-crystal: 2px;
+
+  /* Legacy glassmorphism (for backward compatibility) */
+  --glass: hsla(0, 0%, 100%, 0.7);
+  --glass-strong: hsla(0, 0%, 100%, 0.85);
+
+  /* Neon (disabled by default) */
+  --neon-pink: transparent;
+  --neon-cyan: transparent;
+  --neon-purple: transparent;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-default:
+    0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-neon: none;
+
+  /* Typography */
+  --font-sans:
+    var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    monospace;
+}
+
+.dark {
+  /* Apple-standard glassmorphism for dark mode - Very subtle and refined */
+  /* Very low opacity for Apple's standard glass effect in dark mode */
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(240, 248, 255, 0.07) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    rgba(230, 240, 255, 0.06) 100%
+  );
+  /* Very subtle white border - Apple standard */
+  --glass-border: rgba(255, 255, 255, 0.15);
+  /* Minimal shadows with subtle inner glow - Apple standard for dark mode */
+  --glass-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.15),
+    0 0 0 0.5px rgba(255, 255, 255, 0.12) inset,
+    0 0 12px rgba(255, 255, 255, 0.15) inset;
+  --glass-shadow-lg:
+    0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2),
+    0 0 0 0.5px rgba(255, 255, 255, 0.15) inset,
+    0 0 20px rgba(255, 255, 255, 0.18) inset;
+  --glass-shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.25), 0 1px 2px rgba(0, 0, 0, 0.12),
+    0 0 0 0.5px rgba(255, 255, 255, 0.1) inset,
+    0 0 8px rgba(255, 255, 255, 0.12) inset;
+
+  /* Frosted glass variant - Enhanced opacity and stronger blur for dark mode */
+  --glass-frosted-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.12) 25%,
+    rgba(240, 248, 255, 0.13) 50%,
+    rgba(255, 255, 255, 0.11) 75%,
+    rgba(230, 240, 255, 0.12) 100%
+  );
+  --glass-frosted-border: rgba(255, 255, 255, 0.25);
+  --glass-frosted-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 0.5px rgba(255, 255, 255, 0.2) inset,
+    0 0 20px rgba(255, 255, 255, 0.22) inset;
+
+  /* Fluted glass variant - Vertical ridges pattern for dark mode */
+  --glass-fluted-pattern: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.12) 4px,
+    rgba(255, 255, 255, 0.05) 8px,
+    rgba(255, 255, 255, 0.01) 10px,
+    rgba(255, 255, 255, 0.05) 12px
+  );
+
+  /* Crystal glass variant - Clear glass with highlights and glow for dark mode */
+  --glass-crystal-bg: rgba(255, 255, 255, 0.1);
+  --glass-crystal-border: rgba(255, 255, 255, 0.3);
+  --glass-crystal-shadow:
+    0 0 20px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 0.15);
+  --glass-crystal-shadow-hover:
+    0 0 25px rgba(0, 0, 0, 0.5), 0 0 35px rgba(255, 255, 255, 0.2);
+
+  /* Base colors - Apple-style white text */
+  --background: transparent;
+  --foreground: oklch(1 0 0); /* White - Apple-style */
+  --card: transparent;
+  --card-foreground: oklch(1 0 0); /* White - Apple-style */
+  --popover: transparent;
+  --popover-foreground: oklch(1 0 0); /* White - Apple-style */
+
+  /* Primary colors - Apple-style white text */
+  --primary: oklch(0.7 0.15 250); /* Light blue */
+  --primary-foreground: oklch(1 0 0); /* White - Apple-style */
+
+  /* Secondary colors - Apple-style white text */
+  --secondary: oklch(0.25 0 0); /* Dark gray */
+  --secondary-foreground: oklch(1 0 0); /* White - Apple-style */
+
+  /* Muted colors - Apple-style white text */
+  --muted: oklch(
+    0.18 0 0
+  ); /* Darker gray - darker shade to avoid glass effect override */
+  --muted-foreground: oklch(1 0 0); /* White - Apple-style */
+
+  /* Accent colors - Apple-style white text */
+  --accent: oklch(0.25 0 0); /* Dark gray */
+  --accent-foreground: oklch(1 0 0); /* White - Apple-style */
+
+  /* Destructive colors - WCAG AA compliant (4.5:1 contrast) */
+  --destructive: oklch(
+    0.65 0.22 25
+  ); /* Light red - 4.5:1 with dark background */
+  --destructive-foreground: oklch(0.12 0 0); /* Near black text on red */
+
+  /* Border and input - WCAG AA compliant (3:1 for UI components) */
+  --border: oklch(0.3 0 0); /* Medium gray - 3:1 contrast */
+  --input: oklch(0.25 0 0); /* Dark gray - 3:1 contrast */
+  --ring: oklch(0.6 0.2 250); /* Light blue ring - 3:1 contrast */
+
+  /* Chart colors - WCAG AA compliant */
+  --chart-1: oklch(0.65 0.2 250); /* Light blue */
+  --chart-2: oklch(0.7 0.15 150); /* Light green */
+  --chart-3: oklch(0.75 0.2 50); /* Light yellow */
+  --chart-4: oklch(0.7 0.2 300); /* Light purple */
+  --chart-5: oklch(0.68 0.2 20); /* Light orange */
+
+  /* Sidebar colors - Apple-style white text */
+  --sidebar: oklch(0.18 0 0); /* Dark gray */
+  --sidebar-foreground: oklch(1 0 0); /* White - Apple-style */
+  --sidebar-primary: oklch(0.7 0.15 250); /* Light blue */
+  --sidebar-primary-foreground: oklch(1 0 0); /* White - Apple-style */
+  --sidebar-accent: oklch(0.25 0 0); /* Dark gray */
+  --sidebar-accent-foreground: oklch(1 0 0); /* White - Apple-style */
+  --sidebar-border: oklch(0.3 0 0); /* Medium gray - 3:1 contrast */
+  --sidebar-ring: oklch(0.6 0.2 250); /* Light blue ring - 3:1 contrast */
+}
+
+/* ============================================================================
+   BASE LAYER STYLES
+   ============================================================================ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    @apply text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: transparent;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+@layer utilities {
+  /* -------------------------------------------------------------------------
+     GLASSMORPHISM UTILITIES
+     ------------------------------------------------------------------------- */
+
+  .glass {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-strong {
+    background: var(--glass-strong);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-button {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+  }
+
+  .glass-button:hover {
+    background: var(--glass-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glass);
+  }
+
+  /* -------------------------------------------------------------------------
+     NEON UTILITIES (active in SynthWave theme)
+     ------------------------------------------------------------------------- */
+
+  .neon-glow {
+    box-shadow: var(--shadow-neon);
+  }
+
+  .neon-text-pink {
+    color: var(--neon-pink);
+    text-shadow: 0 0 10px var(--neon-pink);
+  }
+
+  .neon-text-cyan {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan);
+  }
+
+  /* -------------------------------------------------------------------------
+     PROSEMIRROR EDITOR BASE STYLES
+     ------------------------------------------------------------------------- */
+
+  .ProseMirror {
+    position: relative;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    white-space: break-spaces;
+    -webkit-font-variant-ligatures: none;
+    font-variant-ligatures: none;
+    font-feature-settings: "liga" 0;
+    outline: none !important;
+    min-height: 120px;
+    caret-color: var(--foreground);
+  }
+
+  .ProseMirror:focus,
+  .ProseMirror-focused {
+    outline: none !important;
+  }
+
+  .ProseMirror pre {
+    white-space: pre-wrap;
+  }
+
+  .ProseMirror ul,
+  .ProseMirror ol {
+    padding-left: 2rem;
+    margin: 1rem 0;
+  }
+
+  .ProseMirror ul {
+    list-style-type: disc;
+  }
+  .ProseMirror ol {
+    list-style-type: decimal;
+  }
+  .ProseMirror li {
+    margin: 0.25rem 0;
+  }
+  .ProseMirror li p {
+    margin: 0;
+  }
+
+  .ProseMirror ul ul,
+  .ProseMirror ol ul {
+    list-style-type: circle;
+  }
+
+  .ProseMirror ul ul ul,
+  .ProseMirror ol ul ul,
+  .ProseMirror ol ol ul {
+    list-style-type: square;
+  }
+
+  /* -------------------------------------------------------------------------
+     ACCORDION ANIMATION UTILITIES
+     ------------------------------------------------------------------------- */
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+  }
+
+  /* -------------------------------------------------------------------------
+     ADVANCED GLASSMORPHISM UTILITIES
+     ------------------------------------------------------------------------- */
+
+  /* Apple-standard glass utility - Very subtle and refined */
+  /* This creates Apple's standard glassmorphism with moderate blur */
+  .glass-bg {
+    /* Low opacity gradient background - Apple standard */
+    background-image: var(--glass-bg);
+    background-color: transparent;
+    /* Moderate backdrop blur - Apple standard (20px) */
+    backdrop-filter: blur(var(--blur)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
+    /* Very subtle white border - Apple standard */
+    border: 0.5px solid var(--glass-border);
+    /* Minimal shadow with subtle inner glow - Apple standard */
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Frosted glass utility - Enhanced blur and higher opacity */
+  .glass-frosted {
+    background-image: var(--glass-frosted-bg) !important;
+    background-color: transparent !important;
+    /* Stronger backdrop blur for frosted effect */
+    backdrop-filter: blur(var(--blur-frosted)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--blur-frosted)) saturate(200%) !important;
+    /* More pronounced border */
+    border: 0.5px solid var(--glass-frosted-border) !important;
+    /* Enhanced shadow for depth */
+    box-shadow: var(--glass-frosted-shadow) !important;
+  }
+
+  /* Fluted glass utility - Vertical ridges with glass effect */
+  .glass-fluted {
+    /* Base glass background combined with fluted pattern */
+    background-image: var(--glass-fluted-pattern), var(--glass-bg) !important;
+    background-color: transparent !important;
+    /* Moderate backdrop blur like standard glass */
+    backdrop-filter: blur(var(--blur)) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(180%) !important;
+    /* Standard glass border */
+    border: 0.5px solid var(--glass-border) !important;
+    /* Standard glass shadow */
+    box-shadow: var(--glass-shadow) !important;
+  }
+
+  /* Crystal glass utility - Clear glass with highlights and glow */
+  .glass-crystal {
+    position: relative;
+    background-color: var(--glass-crystal-bg) !important;
+    /* Minimal backdrop blur for clarity */
+    backdrop-filter: blur(var(--blur-crystal)) !important;
+    -webkit-backdrop-filter: blur(var(--blur-crystal)) !important;
+    border: 1px solid var(--glass-crystal-border) !important;
+    box-shadow: var(--glass-crystal-shadow) !important;
+    transition: all 0.3s ease !important;
+    /* Top highlight gradient */
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0.15),
+      transparent 50%
+    ) !important;
+    background-size: 200% 200% !important;
+  }
+
+  .glass-crystal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    opacity: 0.7;
+    pointer-events: none;
+    height: 30%;
+  }
+
+  .glass-crystal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      circle at 50% 120%,
+      rgba(255, 255, 255, 0.2),
+      transparent 70%
+    );
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  .glass-crystal:hover {
+    box-shadow: var(--glass-crystal-shadow-hover) !important;
+    background-position: 100% 100% !important;
+  }
+
+  /* Ensure react-day-picker doesn't override glass effect */
+  .glass-bg[class*="rdp"] {
+    background-color: transparent !important;
+  }
+
+  .glass-bg .rdp {
+    background-color: transparent !important;
+  }
+
+  .glass-bg .rdp-month {
+    background-color: transparent !important;
+  }
+}
+
+/* ============================================================================
+   ANIMATIONS
+   ============================================================================ */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ============================================================================
+   SONNER TOAST NOTIFICATIONS - GLASS EFFECT OVERRIDES
+   ============================================================================ */
+
+/* Sonner Toast Notifications - Glass Effect Overrides */
+[data-sonner-toast] {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--blur)) !important;
+  -webkit-backdrop-filter: blur(var(--blur)) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow-lg) !important;
+  color: var(--foreground) !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  border-color: rgba(34, 197, 94, 0.3) !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  border-color: rgba(234, 179, 8, 0.3) !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Toast description text */
+[data-sonner-toast] [data-description] {
+  color: var(--muted-foreground) !important;
+}
+
+/* Toast action buttons - Glass styled */
+[data-sonner-toast] [data-button] {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--blur-sm)) !important;
+  -webkit-backdrop-filter: blur(var(--blur-sm)) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--foreground) !important;
+  transition: opacity 0.2s ease !important;
+}
+
+[data-sonner-toast] [data-button]:hover {
+  opacity: 0.9 !important;
+}
+
+/* Toast cancel button */
+[data-sonner-toast] [data-cancel] {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--blur-sm)) !important;
+  -webkit-backdrop-filter: blur(var(--blur-sm)) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--muted-foreground) !important;
+}
+
+[data-sonner-toast] [data-cancel]:hover {
+  opacity: 0.9 !important;
+}
+
+/* Toast close button */
+[data-sonner-toast] [data-close-button] {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(var(--blur-sm)) !important;
+  -webkit-backdrop-filter: blur(var(--blur-sm)) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--foreground) !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  opacity: 0.9 !important;
+}
+
+/* ============================================================================
+   CODE COMPONENT STYLES
+   ============================================================================
+
+   Styles for the Code component used in Storybook and documentation.
+   Ensures Shiki syntax highlighting output respects container styles.
+   ============================================================================ */
+
+/* Code component container */
+[data-slot="code"] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  border-radius: 0.5rem;
+}
+
+/* Code header with file name and copy button */
+[data-slot="code-header"] {
+  background-color: var(--accent);
+  flex-shrink: 0;
+  gap: 0.5rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  font-size: 0.875rem;
+  display: flex;
+  color: var(--muted-foreground);
+  align-items: center;
+  padding: 0 1rem;
+  width: 100%;
+  height: 2.5rem;
+}
+
+/* Code block container */
+[data-slot="code-block"] {
+  position: relative;
+  font-size: 0.875rem;
+  padding: 1rem;
+  overflow: auto;
+}
+
+/* @HACK: Using !important to override Shiki's inline styles */
+[data-slot="code-block"] pre {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* @HACK: Using !important to override Shiki's inline styles */
+[data-slot="code-block"] code {
+  background: transparent !important;
+  font-size: 13px !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* @HACK: Using !important to override Shiki's inline styles */
+[data-slot="code-block"] .line {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ============================================================================
+   TABLE COMPONENT STYLES
+   ============================================================================
+
+   Styles for table components used in DataTable and other table displays.
+   ============================================================================ */
+
+/* Table header styles - ensure consistent font size and reduced padding */
+[data-slot="table-header"] [data-slot="table-head"],
+[data-slot="table-header"] th {
+  font-size: 0.8125rem; /* text-xs - slightly smaller than body text */
+  font-weight: 500;
+  line-height: 1.25rem;
+  border: none !important; /* Remove border from table headers */
+  padding-top: 0.375rem !important; /* py-1.5 - reduced padding */
+  padding-bottom: 0.375rem !important;
+  padding-left: 0.5rem !important; /* px-2 - keep horizontal padding */
+  padding-right: 0.5rem !important;
+  height: auto !important; /* Remove fixed height to allow padding control */
+}
+
+/* Keep border on table header row (bottom border only, no top border) */
+[data-slot="table-header"] tr {
+  border-top: none !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Table head with button (for sortable columns) - ensure inline layout like Shadcn */
+[data-slot="table-head"] [data-slot="button"],
+[data-slot="table-head"] button {
+  font-size: 0.8125rem; /* text-xs - match header text size */
+  line-height: 1.25rem;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 - space between text and icon */
+  white-space: nowrap !important;
+  width: auto !important;
+  min-width: fit-content;
+  max-width: none !important;
+  overflow: visible !important;
+  height: auto !important; /* Remove fixed height */
+  padding-top: 0.25rem !important; /* py-1 - reduced padding */
+  padding-bottom: 0.25rem !important;
+  margin: 0 !important; /* Remove any margins */
+}
+
+/* Ensure button text stays inline (remove flex constraints that cause wrapping) */
+[data-slot="table-head"] [data-slot="button"] > span,
+[data-slot="table-head"] button > span {
+  white-space: nowrap;
+  display: inline;
+  flex: none !important;
+  overflow: visible !important;
+}
+
+/* Ensure icons in table header buttons stay inline to the right of text */
+[data-slot="table-head"] [data-slot="button"] svg,
+[data-slot="table-head"] button svg {
+  flex-shrink: 0;
+  width: 1rem; /* size-4 - standard icon size */
+  height: 1rem;
+  margin-left: 0.5rem; /* ml-2 - space after text */
+}
+
+/* Remove fixed width constraint that causes wrapping - allow auto width */
+[data-slot="table-head"].w-\[100px\] {
+  width: auto !important;
+  min-width: fit-content;
+}
+
+/* Table container - add rounded corners and border, remove top/bottom margins */
+[data-slot="table-container"] {
+  border: 1px solid var(--border) !important;
+  border-radius: 0.5rem !important; /* rounded-md */
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  overflow: hidden; /* Ensure rounded corners work */
+}
+
+/* DataTable wrapper - keep rounded corners and border, remove top/bottom margins */
+.rounded-md.border {
+  border: 1px solid var(--border) !important;
+  border-radius: 0.5rem !important; /* rounded-md */
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  overflow: hidden; /* Ensure rounded corners work */
+}
+
+/* Table element - remove any default spacing and margins */
+[data-slot="table"] {
+  border: none !important;
+  border-collapse: collapse;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Table rows - clean borders between rows only (no left/right borders) */
+[data-slot="table-row"] {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Remove border from last row in body (border is handled by container) */
+[data-slot="table-body"] [data-slot="table-row"]:last-child {
+  border-bottom: none !important;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

@@ -1,0 +1,152 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+
+  // Global environment variables that affect all tasks
+  // These bypass the cache when changed (task will re-run)
+  "globalDependencies": [
+    ".env",
+    ".env.local",
+    ".env.production",
+    ".env.development"
+  ],
+
+  // Environment variables passed through to all tasks
+  // Add variables here that should be available but don't affect caching
+  "globalPassThroughEnv": [
+    // Node environment
+    "NODE_ENV",
+    "VERCEL_ENV",
+
+    // CI/CD detection
+    "CI",
+    "GITHUB_ACTIONS",
+    "VERCEL",
+
+    // Common secrets (passed through, not cached on)
+    "DATABASE_URL",
+    "DIRECT_URL"
+
+    // Auth (add your auth provider vars here)
+    // "NEXTAUTH_SECRET",
+    // "NEXTAUTH_URL",
+
+    // API keys (add as needed)
+    // "STRIPE_SECRET_KEY",
+    // "OPENAI_API_KEY"
+
+    // Feature flags / runtime config
+    // "NEXT_PUBLIC_*" vars are typically inlined at build time,
+    // so they should go in task-level "env" not here
+  ],
+
+  "tasks": {
+    // Production build - depends on workspace dependencies being built first
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+      // Add build-time env vars that should invalidate cache
+      "env": [
+        "NEXT_PUBLIC_*"
+      ]
+    },
+
+    // Development server - long-running, no caching
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+
+    // Linting - needs built dependencies for type-aware rules
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+
+    // Tests - run after local build completes
+    "test": {
+      "dependsOn": ["build"],
+      "env": [
+        "TEST_DATABASE_URL"
+      ]
+    },
+
+    // Tests with coverage
+    "test:coverage": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "env": [
+        "TEST_DATABASE_URL"
+      ]
+    },
+
+    // TypeScript checking - needs built dependencies for cross-package types
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+
+    // Clean build artifacts - never cache
+    "clean": {
+      "cache": false
+    },
+
+    // Database tasks - side effects, never cache
+    "db:generate": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "ml:dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "ml:serve": {
+      "cache": false,
+      "persistent": true
+    },
+    "ml:worker": {
+      "cache": false,
+      "persistent": true
+    },
+    "ml:test": {
+      "outputs": ["coverage/**", ".coverage", "htmlcov/**"],
+      "dependsOn": [],
+      "env": [
+        "TEST_DATABASE_URL",
+        "CONVERGENCE_ML_*"
+      ]
+    },
+    "ml:test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "ml:lint": {
+      "dependsOn": []
+    },
+    "ml:lint:fix": {
+      "cache": false
+    },
+    "ml:format": {
+      "cache": false
+    },
+    "ml:typecheck": {
+      "dependsOn": []
+    },
+    "ml:models:download": {
+      "cache": false,
+      "outputs": ["model_artifacts/**"]
+    },
+    "ml:models:list": {
+      "cache": false
+    },
+
+    // Storybook build
+    "build:storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
+    }
+  }
+}

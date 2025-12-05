@@ -1,0 +1,8 @@
+{
+  "name": "@convergence/typescript-config",
+  "version": "0.1.0",
+  "description": "Monorepo shared TypeScript config",
+  "private": true,
+  "license": "MIT",
+  "files": ["*.json"]
+}

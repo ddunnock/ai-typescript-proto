@@ -1,0 +1,277 @@
+/**
+ * SynthWave Theme
+ *
+ * A neon retro aesthetic inspired by SynthWave84.
+ * Features neon pink/cyan accents, dark gradients, and glow effects.
+ */
+
+/* ============================================================================
+   DARK MODE (Default - SynthWave is dark-first)
+   ============================================================================ */
+
+[data-theme="synthwave"],
+[data-theme="synthwave"].dark,
+.dark[data-theme="synthwave"] {
+  /* Core colors - Deep purple/blue dark */
+  --background: hsl(230 70% 10%);
+  --foreground: hsl(180 100% 95%);
+
+  /* Card */
+  --card: hsl(250 50% 12%);
+  --card-foreground: hsl(180 100% 95%);
+
+  /* Popover */
+  --popover: hsl(250 50% 12%);
+  --popover-foreground: hsl(180 100% 95%);
+
+  /* Primary - Neon Pink */
+  --primary: hsl(320 100% 60%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary */
+  --secondary: hsl(270 50% 20%);
+  --secondary-foreground: hsl(180 100% 90%);
+
+  /* Muted */
+  --muted: hsl(270 40% 18%);
+  --muted-foreground: hsl(270 20% 60%);
+
+  /* Accent - Neon Cyan */
+  --accent: hsl(180 100% 50%);
+  --accent-foreground: hsl(230 70% 10%);
+
+  /* Destructive */
+  --destructive: hsl(350 100% 55%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  /* Border/Input */
+  --border: hsl(270 30% 25%);
+  --input: hsl(270 30% 20%);
+  --ring: hsl(320 100% 60%);
+
+  /* Glassmorphism - SynthWave style */
+  --glass: hsla(250, 50%, 15%, 0.6);
+  --glass-strong: hsla(250, 50%, 18%, 0.8);
+  --glass-border: hsla(320, 100%, 60%, 0.2);
+
+  /* Glass effect variables - Enhanced with neon gradient tint and border glow (dark mode) */
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(40, 20, 60, 0.5) 0%,
+    rgba(30, 15, 50, 0.4) 50%,
+    rgba(20, 30, 60, 0.45) 100%
+  );
+  --glass-border-enhanced: rgba(255, 20, 147, 0.25);
+  --glass-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 20, 147, 0.15) inset, 0 0 20px rgba(255, 20, 147, 0.1);
+  --glass-shadow-lg:
+    0 12px 48px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 20, 147, 0.2) inset, 0 0 30px rgba(255, 20, 147, 0.15);
+  --glass-shadow-sm:
+    0 4px 16px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 20, 147, 0.1) inset, 0 0 10px rgba(255, 20, 147, 0.05);
+  --blur: 30px;
+  --blur-sm: 15px;
+  --blur-lg: 50px;
+
+  /* Neon colors */
+  --neon-pink: hsl(320 100% 60%);
+  --neon-cyan: hsl(180 100% 50%);
+  --neon-purple: hsl(270 100% 65%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+  --shadow-default:
+    0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  --shadow-glass: 0 8px 32px hsla(320, 100%, 60%, 0.2);
+  --shadow-neon:
+    0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink),
+    0 0 20px var(--neon-pink), 0 0 40px var(--neon-pink);
+
+  /* Border radius - Slightly more rounded for retro feel */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+}
+
+/* ============================================================================
+   LIGHT MODE (Toned-down SynthWave)
+   ============================================================================ */
+
+[data-theme="synthwave"].light,
+.light[data-theme="synthwave"] {
+  /* Core colors - Light with pink/purple tint */
+  --background: hsl(320 30% 98%);
+  --foreground: hsl(270 50% 15%);
+
+  /* Card */
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(270 50% 15%);
+
+  /* Popover */
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(270 50% 15%);
+
+  /* Primary - Darker pink for light mode */
+  --primary: hsl(320 80% 45%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary */
+  --secondary: hsl(320 20% 92%);
+  --secondary-foreground: hsl(270 50% 25%);
+
+  /* Muted */
+  --muted: hsl(320 15% 94%);
+  --muted-foreground: hsl(270 20% 50%);
+
+  /* Accent - Darker cyan for light mode */
+  --accent: hsl(180 70% 40%);
+  --accent-foreground: hsl(0 0% 100%);
+
+  /* Destructive */
+  --destructive: hsl(350 80% 50%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  /* Border/Input */
+  --border: hsl(320 20% 85%);
+  --input: hsl(320 20% 85%);
+  --ring: hsl(320 80% 45%);
+
+  /* Glassmorphism - Light mode */
+  --glass: hsla(320, 30%, 100%, 0.7);
+  --glass-strong: hsla(320, 30%, 100%, 0.85);
+  --glass-border: hsla(320, 20%, 85%, 0.5);
+
+  /* Glass effect variables - Enhanced with pink gradient tint and border glow (light mode) */
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(255, 240, 250, 0.5) 0%,
+    rgba(255, 230, 245, 0.35) 50%,
+    rgba(250, 240, 255, 0.4) 100%
+  );
+  --glass-border-enhanced: rgba(255, 20, 147, 0.2);
+  --glass-shadow:
+    0 8px 32px rgba(255, 20, 147, 0.1), 0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 0 20px rgba(255, 20, 147, 0.05);
+  --glass-shadow-lg:
+    0 12px 48px rgba(255, 20, 147, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset, 0 0 30px rgba(255, 20, 147, 0.08);
+  --glass-shadow-sm:
+    0 4px 16px rgba(255, 20, 147, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 10px rgba(255, 20, 147, 0.03);
+  --blur: 30px;
+  --blur-sm: 15px;
+  --blur-lg: 50px;
+
+  /* Neon - Subdued for light mode */
+  --neon-pink: hsl(320 80% 55%);
+  --neon-cyan: hsl(180 70% 45%);
+  --neon-purple: hsl(270 80% 55%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-default:
+    0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-glass: 0 8px 32px hsla(320, 80%, 45%, 0.15);
+  --shadow-neon: 0 0 3px var(--neon-pink), 0 0 6px var(--neon-pink);
+}
+
+/* ============================================================================
+   SYNTHWAVE GRADIENT BACKGROUND
+   ============================================================================ */
+
+[data-theme="synthwave"] body {
+  background: linear-gradient(
+    135deg,
+    hsl(230 70% 10%) 0%,
+    hsl(270 50% 12%) 50%,
+    hsl(240 60% 11%) 100%
+  );
+}
+
+[data-theme="synthwave"].light body,
+.light[data-theme="synthwave"] body {
+  background: linear-gradient(
+    135deg,
+    hsl(320 30% 98%) 0%,
+    hsl(280 25% 96%) 50%,
+    hsl(200 30% 97%) 100%
+  );
+}
+
+/* ============================================================================
+   SCROLLBAR STYLING - Neon gradient
+   ============================================================================ */
+
+[data-theme="synthwave"] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-theme="synthwave"] ::-webkit-scrollbar-track {
+  background: hsla(270, 40%, 15%, 0.5);
+}
+
+[data-theme="synthwave"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    hsl(320 100% 60%) 0%,
+    hsl(270 100% 65%) 50%,
+    hsl(180 100% 50%) 100%
+  );
+  border-radius: 5px;
+}
+
+[data-theme="synthwave"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    hsl(320 100% 65%) 0%,
+    hsl(270 100% 70%) 50%,
+    hsl(180 100% 55%) 100%
+  );
+}
+
+/* Light mode scrollbar */
+[data-theme="synthwave"].light ::-webkit-scrollbar-track,
+.light[data-theme="synthwave"] ::-webkit-scrollbar-track {
+  background: hsl(320 15% 90%);
+}
+
+[data-theme="synthwave"].light ::-webkit-scrollbar-thumb,
+.light[data-theme="synthwave"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    hsl(320 80% 55%) 0%,
+    hsl(270 80% 60%) 50%,
+    hsl(180 70% 50%) 100%
+  );
+}
+
+/* ============================================================================
+   SYNTHWAVE-SPECIFIC UTILITIES
+   ============================================================================ */
+
+/* Neon button hover effect */
+[data-theme="synthwave"] .glass-button:hover {
+  box-shadow: 0 8px 24px hsla(320, 100%, 60%, 0.3);
+  border-color: hsla(320, 100%, 60%, 0.4);
+}
+
+/* Primary button glow */
+[data-theme="synthwave"] .glass-button-primary {
+  background: linear-gradient(135deg, var(--neon-pink), var(--neon-cyan));
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+}
+
+[data-theme="synthwave"] .glass-button-primary:hover {
+  box-shadow: 0 8px 32px hsla(320, 100%, 60%, 0.5);
+}

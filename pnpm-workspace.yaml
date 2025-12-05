@@ -1,3 +1,9 @@
+packages:
+  - 'packages/*'
+  - 'apps/*'
+  - 'tooling'
+  - 'services/*'
+
 onlyBuiltDependencies:
   - sharp
   - unrs-resolver

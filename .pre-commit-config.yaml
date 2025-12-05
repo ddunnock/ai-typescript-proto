@@ -1,0 +1,137 @@
+# Pre-commit hooks for ConvergenceOS monorepo
+# Handles both TypeScript/JavaScript and Python linting
+#
+# Install: pre-commit install
+# Run all: pre-commit run --all-files
+# Update: pre-commit autoupdate
+#
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  # ==========================================================================
+  # General Hooks
+  # ==========================================================================
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^(pnpm-lock\.yaml|.*\.snap)$
+      - id: end-of-file-fixer
+        exclude: ^(pnpm-lock\.yaml|.*\.snap)$
+      - id: check-yaml
+        args: [--unsafe] # Allow custom tags in YAML
+      - id: check-json
+        exclude: ^(tsconfig\.json|\.vscode/)
+      - id: check-added-large-files
+        args: [--maxkb=500]
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: check-case-conflict
+
+  # ==========================================================================
+  # TypeScript / JavaScript Hooks
+  # ==========================================================================
+
+  # Prettier for formatting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        types_or: [javascript, jsx, ts, tsx, json, markdown, css]
+        exclude: ^(pnpm-lock\.yaml|.*\.min\..*)$
+        additional_dependencies:
+          - prettier@3.7.2
+          - prettier-plugin-tailwindcss@0.7.1
+
+  # ESLint for JavaScript/TypeScript linting
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v9.17.0
+    hooks:
+      - id: eslint
+        types_or: [javascript, jsx, ts, tsx]
+        args: [--fix, --max-warnings=0]
+        additional_dependencies:
+          - eslint@9
+          - typescript@5
+          - "@typescript-eslint/parser@8"
+          - "@typescript-eslint/eslint-plugin@8"
+          - eslint-plugin-jsdoc@50
+
+  # ==========================================================================
+  # Python Hooks (services/ml)
+  # ==========================================================================
+
+  # Ruff - Fast Python linter and formatter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.4
+    hooks:
+      # Linter
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        files: ^services/ml/
+      # Formatter
+      - id: ruff-format
+        files: ^services/ml/
+
+  # MyPy - Python type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        files: ^services/ml/src/
+        args:
+          - --ignore-missing-imports
+          - --python-version=3.12
+        additional_dependencies:
+          - pydantic>=2.0
+          - pydantic-settings>=2.0
+          - fastapi>=0.100
+          - types-beautifulsoup4
+
+  # ==========================================================================
+  # Documentation Hooks
+  # ==========================================================================
+
+  # Check RST files
+  - repo: https://github.com/rstcheck/rstcheck
+    rev: v6.2.4
+    hooks:
+      - id: rstcheck
+        files: ^docs/
+        args:
+          [
+            --ignore-directives=automodule,
+            autoclass,
+            autofunction,
+            js:automodule,
+            js:autofunction,
+            js:autoclass,
+            http:get,
+            http:post,
+          ]
+
+  # ==========================================================================
+  # Security Hooks
+  # ==========================================================================
+
+  # Detect secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+        exclude: (pnpm-lock\.yaml|\.env\.example)$
+
+# Configuration
+default_language_version:
+  python: python3.12
+  node: "22.0.0"
+
+# CI configuration
+ci:
+  autofix_commit_msg: "style: auto-fix pre-commit hooks"
+  autofix_prs: true
+  autoupdate_branch: "main"
+  autoupdate_commit_msg: "chore: update pre-commit hooks"
+  autoupdate_schedule: monthly

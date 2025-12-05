@@ -1,0 +1,204 @@
+/**
+ * Convergence Theme
+ *
+ * A clean, Notion/Obsidian-inspired theme with purple/violet accents.
+ * Supports both light and dark modes with glassmorphism effects.
+ */
+
+/* ============================================================================
+   LIGHT MODE (Default)
+   ============================================================================ */
+
+:root,
+[data-theme="convergence"] {
+  /* Core colors */
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(240 10% 10%);
+
+  /* Card */
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(240 10% 10%);
+
+  /* Popover */
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(240 10% 10%);
+
+  /* Primary - Purple/Violet accent */
+  --primary: hsl(262 83% 58%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary */
+  --secondary: hsl(240 5% 96%);
+  --secondary-foreground: hsl(240 6% 10%);
+
+  /* Muted */
+  --muted: hsl(240 5% 96%);
+  --muted-foreground: hsl(240 4% 46%);
+
+  /* Accent - Light purple for highlights */
+  --accent: hsl(262 80% 96%);
+  --accent-foreground: hsl(262 83% 45%);
+
+  /* Destructive */
+  --destructive: hsl(299 99% 48%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  /* Border/Input */
+  --border: hsl(240 6% 90%);
+  --input: hsl(240 6% 90%);
+  --ring: hsl(262 83% 58%);
+
+  /* Glassmorphism - Light mode */
+  --glass: hsla(0, 0%, 100%, 0.7);
+  --glass-strong: hsla(0, 0%, 100%, 0.85);
+  --glass-border: hsla(240, 6%, 90%, 0.5);
+
+  /* Glass effect variables - Enhanced with gradient tint and border glow */
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(240, 248, 255, 0.3) 100%
+  );
+  --glass-border-enhanced: rgba(255, 255, 255, 0.3);
+  --glass-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 0 20px rgba(255, 255, 255, 0.05);
+  --glass-shadow-lg:
+    0 12px 48px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 0 30px rgba(255, 255, 255, 0.08);
+  --glass-shadow-sm:
+    0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+    0 0 10px rgba(255, 255, 255, 0.03);
+  --blur: 30px;
+  --blur-sm: 15px;
+  --blur-lg: 50px;
+
+  /* Neon disabled in Convergence */
+  --neon-pink: transparent;
+  --neon-cyan: transparent;
+  --neon-purple: transparent;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-default:
+    0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-glass: 0 8px 32px hsla(262, 83%, 58%, 0.1);
+  --shadow-neon: none;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+/* ============================================================================
+   DARK MODE
+   ============================================================================ */
+
+.dark[data-theme="convergence"],
+[data-theme="convergence"].dark,
+.dark:root,
+:root.dark {
+  /* Core colors - Subtle teal/blue/purple tinted dark */
+  --background: hsl(230 25% 9%);
+  --foreground: hsl(0 0% 95%);
+
+  /* Card */
+  --card: hsl(230 20% 12%);
+  --card-foreground: hsl(0 0% 95%);
+
+  /* Popover */
+  --popover: hsl(230 20% 12%);
+  --popover-foreground: hsl(0 0% 95%);
+
+  /* Primary - Brighter purple for dark mode */
+  --primary: hsl(262 83% 65%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary */
+  --secondary: hsl(230 20% 18%);
+  --secondary-foreground: hsl(0 0% 95%);
+
+  /* Muted */
+  --muted: hsl(230 15% 20%);
+  --muted-foreground: hsl(240 5% 65%);
+
+  /* Accent */
+  --accent: hsl(262 30% 20%);
+  --accent-foreground: hsl(262 80% 75%);
+
+  /* Destructive */
+  --destructive: hsl(0 62% 50%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  /* Border/Input */
+  --border: hsl(230 15% 20%);
+  --input: hsl(230 15% 20%);
+  --ring: hsl(262 83% 65%);
+
+  /* Glassmorphism - Dark mode */
+  --glass: hsla(230, 25%, 12%, 0.7);
+  --glass-strong: hsla(230, 25%, 15%, 0.85);
+  --glass-border: hsla(230, 15%, 25%, 0.5);
+
+  /* Glass effect variables - Enhanced with gradient tint and border glow (dark mode) */
+  --glass-bg: linear-gradient(
+    135deg,
+    rgba(30, 35, 55, 0.5) 0%,
+    rgba(25, 30, 50, 0.4) 50%,
+    rgba(35, 40, 65, 0.45) 100%
+  );
+  --glass-border-enhanced: rgba(255, 255, 255, 0.12);
+  --glass-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset, 0 0 20px rgba(138, 43, 226, 0.08);
+  --glass-shadow-lg:
+    0 12px 48px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset, 0 0 30px rgba(138, 43, 226, 0.12);
+  --glass-shadow-sm:
+    0 4px 16px rgba(0, 0, 0, 0.25), 0 1px 4px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 0 10px rgba(138, 43, 226, 0.05);
+  --blur: 30px;
+  --blur-sm: 15px;
+  --blur-lg: 50px;
+
+  /* Shadows - Adjusted for dark mode */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-default:
+    0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg:
+    0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-glass: 0 8px 32px hsla(262, 83%, 58%, 0.15);
+}
+
+/* ============================================================================
+   SCROLLBAR STYLING
+   ============================================================================ */
+
+[data-theme="convergence"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="convergence"] ::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+[data-theme="convergence"] ::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+[data-theme="convergence"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
