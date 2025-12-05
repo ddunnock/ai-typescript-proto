@@ -1,0 +1,36 @@
+{
+  "name": "@repo/providers",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./anthropic": { "types": "./dist/anthropic.d.ts", "import": "./dist/anthropic.js" },
+    "./openai": { "types": "./dist/openai.d.ts", "import": "./dist/openai.js" },
+    "./google": { "types": "./dist/google.d.ts", "import": "./dist/google.js" },
+    "./local": { "types": "./dist/local.d.ts", "import": "./dist/local.js" },
+    "./factory": { "types": "./dist/factory.d.ts", "import": "./dist/factory.js" }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.0",
+    "@ai-sdk/google": "^1.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "ai": "^4.0.0",
+    "@repo/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "rimraf": "^5.0.5",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^2.0.0"
+  }
+}
