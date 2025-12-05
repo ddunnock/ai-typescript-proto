@@ -19,11 +19,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@convergence/shared": ["../../packages/shared/src"],
-      "@convergence/providers": ["../../packages/providers/src"],
-      "@convergence/mcp": ["../../packages/mcp/src"],
-      "@convergence/agents": ["../../packages/agents/src"]
+      "@/*": ["./src/*"]
+      // TODO: Uncomment when packages are created:
+      // "@repo/shared": ["../../packages/shared/src"],
+      // "@repo/providers": ["../../packages/providers/src"],
+      // "@repo/mcp": ["../../packages/mcp/src"],
+      // "@repo/agents": ["../../packages/agents/src"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

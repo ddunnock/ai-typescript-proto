@@ -1,5 +1,5 @@
 {
-  "name": "@convergence/eslint-config",
+  "name": "@repo/eslint-config",
   "version": "0.1.0",
   "description": "Global ESLint config for Convergence projects",
   "type": "module",

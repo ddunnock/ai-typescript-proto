@@ -277,8 +277,8 @@ poetry add --group gpu <package>         # GPU dependencies
 
 ### Phase 2: Agent Framework
 - [ ] Set up `packages/` monorepo structure
-- [ ] Implement shared types (`@convergence/shared`)
-- [ ] Add LLM providers (`@convergence/providers`)
+- [ ] Implement shared types (`@repo/shared`)
+- [ ] Add LLM providers (`@repo/providers`)
 - [ ] Create base agent with LangGraph
 
 ### Phase 3: MCP Integration

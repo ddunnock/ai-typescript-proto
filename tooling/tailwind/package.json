@@ -1,5 +1,5 @@
 {
-  "name": "@convergence/tailwind-config",
+  "name": "@repo/tailwind-config",
   "version": "0.1.0",
   "description": "Global Tailwind CSS config for Convergence projects",
   "type": "module",

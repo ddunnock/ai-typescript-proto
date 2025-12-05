@@ -1,9 +1,10 @@
 packages:
   - 'packages/*'
   - 'apps/*'
-  - 'tooling'
+  - 'tooling/*'
   - 'services/*'
 
 onlyBuiltDependencies:
   - sharp
   - unrs-resolver
+  - esbuild

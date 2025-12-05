@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
-    transpilePackages: [
-        '@convergence/shared',
-        '@convergence/providers',
-        '@convergence/mcp',
-        '@convergence/agents',
-    ],
+    // TODO: Uncomment when packages are created:
+    // transpilePackages: [
+    //     '@repo/shared',
+    //     '@repo/providers',
+    //     '@repo/mcp',
+    //     '@repo/agents',
+    // ],
     experimental: {
         serverComponentsExternalPackages: ['@modelcontextprotocol/sdk'],
     },

@@ -1,54 +1,88 @@
 {
-  "name": "convergence-testbed",
+  "name": "ai-typescript-proto",
   "version": "0.1.0",
   "private": true,
-  "description": "Multi-agent MCP testbed for AI-enhanced documentation platform",
-  "author": "Convergence Team",
-  "license": "MIT",
-  "type": "module",
+  "packageManager": "pnpm@10.24.0",
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "node": "^25.0.0",
+    "pnpm": "^10.24.0"
   },
-  "packageManager": "pnpm@8.15.0",
   "scripts": {
-    "build": "pnpm -r build",
-    "build:packages": "pnpm --filter './packages/**' build",
-    "dev": "pnpm -r --parallel dev",
-    "dev:console": "pnpm --filter @convergence/dev-console dev",
-    "test": "pnpm -r test",
-    "test:watch": "pnpm -r --parallel test:watch",
-    "lint": "pnpm -r lint",
-    "lint:fix": "pnpm -r lint:fix",
-    "typecheck": "pnpm -r typecheck",
-    "clean": "pnpm -r clean && rimraf node_modules",
-    "clean:all": "pnpm -r clean && rimraf node_modules .turbo",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "prepare": "husky install",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish",
-    "inspector": "pnpm --filter @convergence/tools inspector",
-    "testbed": "pnpm --filter @convergence/tools testbed",
-    "tracer": "pnpm --filter @convergence/tools tracer"
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@repo/web",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint --fix",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,json,yaml,yml,css,scss}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,json,yaml,yml,css,scss}\"",
+    "prepare": "husky",
+    "precommit": "pnpm exec lint-staged && pnpm ml:lint && pnpm ml:typecheck",
+    "precommit:install": "pre-commit install",
+    "precommit:run": "pre-commit run --all-files",
+    "precommit:update": "pre-commit autoupdate",
+    "db:generate": "turbo run db:generate --filter=@repo/db",
+    "db:migrate": "turbo run db:migrate --filter=@repo/db",
+    "db:studio": "turbo run db:studio --filter=@repo/db",
+    "docs:build": "sphinx-build -b html docs docs/_build/html",
+    "docs:serve": "python -m http.server -d docs/_build/html",
+    "ml:dev": "cd services/ml && poetry run convergence-ml serve --reload",
+    "ml:serve": "cd services/ml && poetry run convergence-ml serve",
+    "ml:worker": "cd services/ml && poetry run convergence-ml worker",
+    "ml:test": "cd services/ml && poetry run pytest",
+    "ml:test:watch": "cd services/ml && poetry run pytest --watch",
+    "ml:lint": "cd services/ml && poetry run ruff check src tests",
+    "ml:lint:fix": "cd services/ml && poetry run ruff check --fix src tests",
+    "ml:format": "cd services/ml && poetry run ruff format src tests",
+    "ml:typecheck": "cd services/ml && poetry run mypy src/convergence_ml",
+    "ml:models:download": "cd services/ml && poetry run convergence-ml models download",
+    "ml:models:list": "cd services/ml && poetry run convergence-ml models list",
+    "ml:install": "cd services/ml && poetry install",
+    "ml:install:dev": "cd services/ml && poetry install --with dev",
+    "ml:install:gpu": "cd services/ml && poetry install --with gpu",
+    "build-storybook": "pnpm --filter @repo/storybook build:storybook",
+    "storybook": "pnpm --filter @repo/storybook storybook",
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
-    "@types/node": "^20.11.0",
-    "husky": "^9.0.0",
-    "lint-staged": "^15.2.0",
-    "prettier": "^3.2.0",
-    "rimraf": "^5.0.5",
-    "turbo": "^1.12.0",
-    "typescript": "^5.3.3"
+    "@changesets/cli": "^2.29.8",
+    "@repo/prettier-config": "workspace:*",
+    "@eslint/js": "^9",
+    "@playwright/test": "^1.57.0",
+    "eslint": "^9",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.7.2",
+    "prettier-plugin-jsdoc": "^1.3.0",
+    "prettier-plugin-tailwindcss": "^0.7.1",
+    "turbo": "^2.6.1",
+    "typedoc": "^0.28",
+    "typescript": "^5",
+    "typescript-eslint": "^8"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix",
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ],
+    "apps/**/*.{js,jsx,mjs,cjs}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ],
+    "packages/**/*.{js,jsx,mjs,cjs}": [
+      "prettier --write",
+      "eslint --fix --max-warnings=0"
+    ],
+    "tooling/**/*.{js,jsx,mjs,cjs}": [
       "prettier --write"
     ],
-    "*.{json,md}": [
+    "*.{md,json,css,scss}": [
+      "prettier --write"
+    ],
+    "*.{yaml,yml}": [
       "prettier --write"
     ]
   }

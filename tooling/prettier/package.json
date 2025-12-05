@@ -1,5 +1,5 @@
 {
-  "name": "@convergence/prettier-config",
+  "name": "@repo/prettier-config",
   "version": "0.1.0",
   "description": "Global Prettier config for Convergence projects with JSDoc support",
   "type": "module",
