@@ -1,0 +1,32 @@
+
+> @repo/mcp@0.1.0 build /home/ddunnock/projects/ai-typescript-proto/packages/ai/mcp
+> tsup
+
+CLI Building entry: src/client.ts, src/index.ts, src/registry.ts, src/server.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/ddunnock/projects/ai-typescript-proto/packages/ai/mcp/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/client.js             118.00 B
+ESM dist/registry.js           200.00 B
+ESM dist/index.js              4.19 KB
+ESM dist/chunk-77USWBA6.js     3.51 KB
+ESM dist/chunk-ZTLXC3XU.js     1.99 KB
+ESM dist/server.js             125.00 B
+ESM dist/chunk-VZ3ZHLKV.js     2.18 KB
+ESM dist/client.js.map         70.00 B
+ESM dist/registry.js.map       72.00 B
+ESM dist/index.js.map          9.42 KB
+ESM dist/chunk-77USWBA6.js.map 8.97 KB
+ESM dist/chunk-ZTLXC3XU.js.map 5.09 KB
+ESM dist/server.js.map         70.00 B
+ESM dist/chunk-VZ3ZHLKV.js.map 5.61 KB
+ESM ⚡️ Build success in 109ms
+DTS Build start
+DTS ⚡️ Build success in 1653ms
+DTS dist/index.d.ts    425.00 B
+DTS dist/registry.d.ts 1.21 KB
+DTS dist/client.d.ts   709.00 B
+DTS dist/server.d.ts   804.00 B

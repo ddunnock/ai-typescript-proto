@@ -33,9 +33,9 @@
     "@repo/shared": "workspace:*",
     "@repo/providers": "workspace:*",
     "@repo/mcp": "workspace:*",
-    "@repo/agents": "workspace:*"
+    "@repo/agents": "workspace:*",
+    "@repo/tracing": "workspace:*"
   },
-  "_dependencies_todo": "Add these when packages are created: @repo/shared, @repo/providers, @repo/mcp, @repo/agents (all workspace:*)",
   "devDependencies": {
     "@types/node": "^24.10.1",
     "@types/react": "^18.2.48",

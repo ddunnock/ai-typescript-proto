@@ -1,0 +1,37 @@
+
+> @repo/shared@0.1.0 build /home/ddunnock/projects/ai-typescript-proto/packages/ai/shared
+> tsup
+
+CLI Building entry: src/config.ts, src/errors.ts, src/index.ts, src/types.ts, src/utils.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/ddunnock/projects/ai-typescript-proto/packages/ai/shared/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/index.js              653.00 B
+ESM dist/chunk-66HTTWO4.js     1.43 KB
+ESM dist/errors.js             189.00 B
+ESM dist/chunk-PR2AVH6P.js     2.07 KB
+ESM dist/chunk-HNQ52E7C.js     2.48 KB
+ESM dist/chunk-U2NF3EPA.js     1.39 KB
+ESM dist/utils.js              189.00 B
+ESM dist/types.js              349.00 B
+ESM dist/config.js             131.00 B
+ESM dist/index.js.map          69.00 B
+ESM dist/chunk-66HTTWO4.js.map 3.19 KB
+ESM dist/errors.js.map         70.00 B
+ESM dist/chunk-PR2AVH6P.js.map 4.50 KB
+ESM dist/chunk-HNQ52E7C.js.map 7.39 KB
+ESM dist/chunk-U2NF3EPA.js.map 3.95 KB
+ESM dist/types.js.map          69.00 B
+ESM dist/config.js.map         70.00 B
+ESM dist/utils.js.map          69.00 B
+ESM ⚡️ Build success in 84ms
+DTS Build start
+DTS ⚡️ Build success in 1078ms
+DTS dist/index.d.ts  740.00 B
+DTS dist/config.d.ts 2.15 KB
+DTS dist/errors.d.ts 941.00 B
+DTS dist/utils.d.ts  1.06 KB
+DTS dist/types.d.ts  8.17 KB

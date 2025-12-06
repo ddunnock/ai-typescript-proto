@@ -9,8 +9,12 @@ const ConfigSchema = z.object({
 
     // Model defaults
     anthropicModel: z.string().default("claude-sonnet-4-20250514"),
-    openaiModel: z.string().default("gpt-4-turbo"),
+    openaiModel: z.string().default("gpt-4o"),
     googleModel: z.string().default("gemini-1.5-pro"),
+
+    // Local/Ollama settings
+    ollamaBaseUrl: z.string().default("http://localhost:11434"),
+    ollamaModel: z.string().default("llama3.2"),
 
     // ML Service
     mlServiceUrl: z.string().default("http://localhost:8100"),
@@ -42,6 +46,8 @@ export function getConfig(): Config {
         anthropicModel: process.env.ANTHROPIC_MODEL,
         openaiModel: process.env.OPENAI_MODEL,
         googleModel: process.env.GOOGLE_MODEL,
+        ollamaBaseUrl: process.env.OLLAMA_BASE_URL,
+        ollamaModel: process.env.OLLAMA_MODEL,
         mlServiceUrl: process.env.ML_SERVICE_URL,
         mlServiceEnabled: process.env.ML_SERVICE_ENABLED !== "false",
         mcpEnabled: process.env.MCP_ENABLED !== "false",

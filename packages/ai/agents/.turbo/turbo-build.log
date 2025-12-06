@@ -1,0 +1,32 @@
+
+> @repo/agents@0.1.0 build /home/ddunnock/projects/ai-typescript-proto/packages/ai/agents
+> tsup
+
+CLI Building entry: src/base.ts, src/index.ts, src/state.ts, src/specialized/index.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/ddunnock/projects/ai-typescript-proto/packages/ai/agents/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/specialized/index.js     241.00 B
+ESM dist/index.js                 287.00 B
+ESM dist/chunk-PR52YFQA.js        21.27 KB
+ESM dist/chunk-TLEG54VS.js        1.09 KB
+ESM dist/chunk-3CXXBFFK.js        6.25 KB
+ESM dist/base.js                  144.00 B
+ESM dist/state.js                 127.00 B
+ESM dist/specialized/index.js.map 69.00 B
+ESM dist/chunk-PR52YFQA.js.map    46.79 KB
+ESM dist/index.js.map             69.00 B
+ESM dist/chunk-TLEG54VS.js.map    2.64 KB
+ESM dist/chunk-3CXXBFFK.js.map    15.16 KB
+ESM dist/base.js.map              68.00 B
+ESM dist/state.js.map             69.00 B
+ESM ⚡️ Build success in 92ms
+DTS Build start
+DTS ⚡️ Build success in 2396ms
+DTS dist/base.d.ts              7.36 KB
+DTS dist/state.d.ts             1.54 KB
+DTS dist/specialized/index.d.ts 3.98 KB
+DTS dist/index.d.ts             296.00 B

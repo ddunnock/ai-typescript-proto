@@ -1,5 +1,5 @@
 {
-  "name": "@convergence/ui",
+  "name": "@repo/ui",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -45,8 +45,7 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
-    "@convergence/eslint-config": "workspace:*",
-    "@convergence/test-utils": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
     "@eslint/js": "^9",
     "@testing-library/jest-dom": "^6",
     "@testing-library/react": "^16",

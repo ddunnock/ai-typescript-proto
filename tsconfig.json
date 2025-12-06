@@ -7,10 +7,13 @@
   "include": [],
   "exclude": ["node_modules"],
   "references": [
-    { "path": "./apps/web" },
-    { "path": "./apps/storybook" },
+    { "path": "./apps/dev-console" },
     { "path": "./packages/ui" },
-    { "path": "./tooling/tailwind" },
-    { "path": "./tooling/typescript" }
+    { "path": "./packages/ai/shared" },
+    { "path": "./packages/ai/providers" },
+    { "path": "./packages/ai/agents" },
+    { "path": "./packages/ai/mcp" },
+    { "path": "./packages/ai/tracing" },
+    { "path": "./tooling/tailwind" }
   ]
 }

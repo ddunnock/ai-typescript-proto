@@ -17,7 +17,8 @@ import { AgentStateAnnotation, type AgentState } from "./state";
 export abstract class BaseAgent {
     protected provider: BaseProvider;
     protected config: AgentConfig;
-    protected graph: ReturnType<typeof StateGraph.prototype.compile>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    protected graph: any;
 
     constructor(provider: BaseProvider, config: Partial<AgentConfig>) {
         this.provider = provider;
@@ -208,7 +209,9 @@ export abstract class BaseAgent {
             messages: [createMessage("user", query)],
         };
 
-        for await (const event of this.graph.stream(initialState)) {
+        const stream = await this.graph.stream(initialState);
+
+        for await (const event of stream) {
             const [nodeName, nodeState] = Object.entries(event)[0] ?? [];
 
             if (!nodeName || !nodeState) continue;

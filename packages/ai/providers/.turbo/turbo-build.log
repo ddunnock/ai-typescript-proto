@@ -1,0 +1,47 @@
+
+> @repo/providers@0.1.0 build /home/ddunnock/projects/ai-typescript-proto/packages/ai/providers
+> tsup
+
+CLI Building entry: src/anthropic.ts, src/base.ts, src/factory.ts, src/google.ts, src/index.ts, src/local.ts, src/openai.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/ddunnock/projects/ai-typescript-proto/packages/ai/providers/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+ESM dist/anthropic.js          162.00 B
+ESM dist/base.js               117.00 B
+ESM dist/factory.js            276.00 B
+ESM dist/google.js             153.00 B
+ESM dist/index.js              392.00 B
+ESM dist/chunk-65NQNVPR.js     1.24 KB
+ESM dist/chunk-GATJQ7L3.js     3.50 KB
+ESM dist/local.js              150.00 B
+ESM dist/chunk-HOG5DHU6.js     3.48 KB
+ESM dist/chunk-6DMJN72X.js     4.78 KB
+ESM dist/openai.js             153.00 B
+ESM dist/chunk-IIGHJ6CW.js     156.00 B
+ESM dist/chunk-IW4VUVDV.js     3.45 KB
+ESM dist/anthropic.js.map      73.00 B
+ESM dist/factory.js.map        71.00 B
+ESM dist/google.js.map         70.00 B
+ESM dist/index.js.map          69.00 B
+ESM dist/chunk-65NQNVPR.js.map 2.56 KB
+ESM dist/local.js.map          69.00 B
+ESM dist/chunk-GATJQ7L3.js.map 8.57 KB
+ESM dist/chunk-HOG5DHU6.js.map 8.56 KB
+ESM dist/chunk-6DMJN72X.js.map 11.82 KB
+ESM dist/openai.js.map         70.00 B
+ESM dist/chunk-IIGHJ6CW.js.map 1.48 KB
+ESM dist/chunk-IW4VUVDV.js.map 8.52 KB
+ESM dist/base.js.map           68.00 B
+ESM ⚡️ Build success in 100ms
+DTS Build start
+DTS ⚡️ Build success in 1418ms
+DTS dist/index.d.ts     368.00 B
+DTS dist/anthropic.d.ts 788.00 B
+DTS dist/factory.d.ts   435.00 B
+DTS dist/google.d.ts    779.00 B
+DTS dist/local.d.ts     872.00 B
+DTS dist/openai.d.ts    779.00 B
+DTS dist/base.d.ts      1.20 KB

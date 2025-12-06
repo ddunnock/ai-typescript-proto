@@ -1,0 +1,38 @@
+
+> @repo/dev-console@0.1.0 build /home/ddunnock/projects/ai-typescript-proto/apps/dev-console
+> next build
+
+  ▲ Next.js 14.2.33
+
+   Creating an optimized production build ...
+request to https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap failed, reason: unable to get local issuer certificate
+
+Retrying 1/3...
+request to https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap failed, reason: unable to get local issuer certificate
+
+Retrying 2/3...
+request to https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap failed, reason: unable to get local issuer certificate
+
+Retrying 3/3...
+FetchError: request to https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap failed, reason: unable to get local issuer certificate
+    at ClientRequest.<anonymous> (/home/ddunnock/projects/ai-typescript-proto/node_modules/.pnpm/next@14.2.33_@babel+core@7.28.5_@opentelemetry+api@1.9.0_@playwright+test@1.57.0_react-_40e69a44082d02acf5b91e9d11d891dc/node_modules/next/dist/compiled/node-fetch/index.js:1:66160)
+    at ClientRequest.emit (node:events:524:28)
+    at emitErrorEvent (node:_http_client:101:11)
+    at TLSSocket.socketErrorListener (node:_http_client:504:5)
+    at TLSSocket.emit (node:events:524:28)
+    at emitErrorNT (node:internal/streams/destroy:169:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:128:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  type: 'system',
+  errno: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY',
+  code: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY'
+}
+Failed to compile.
+
+src/app/layout.tsx
+`next/font` error:
+Failed to fetch `Inter` from Google Fonts.
+
+
+> Build failed because of webpack errors
+ ELIFECYCLE  Command failed with exit code 1.

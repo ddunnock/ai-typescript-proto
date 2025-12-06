@@ -1,0 +1,31 @@
+
+> @repo/tracing@0.1.0 build /home/ddunnock/projects/ai-typescript-proto/packages/ai/tracing
+> tsup
+
+CLI Building entry: src/exporters.ts, src/index.ts, src/tracer.ts, src/types.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.1
+CLI Using tsup config: /home/ddunnock/projects/ai-typescript-proto/packages/ai/tracing/tsup.config.ts
+CLI Target: es2022
+CLI Cleaning output folder
+ESM Build start
+Generated an empty chunk: "types".
+ESM dist/index.js              262.00 B
+ESM dist/tracer.js             156.00 B
+ESM dist/types.js              68.00 B
+ESM dist/chunk-VQ67DVYZ.js     3.40 KB
+ESM dist/exporters.js          183.00 B
+ESM dist/chunk-PXGEZHTQ.js     5.86 KB
+ESM dist/index.js.map          69.00 B
+ESM dist/tracer.js.map         70.00 B
+ESM dist/chunk-VQ67DVYZ.js.map 9.70 KB
+ESM dist/types.js.map          69.00 B
+ESM dist/chunk-PXGEZHTQ.js.map 15.70 KB
+ESM dist/exporters.js.map      73.00 B
+ESM ⚡️ Build success in 94ms
+DTS Build start
+DTS ⚡️ Build success in 1229ms
+DTS dist/index.d.ts     387.00 B
+DTS dist/exporters.d.ts 1.66 KB
+DTS dist/tracer.d.ts    1.90 KB
+DTS dist/types.d.ts     1.83 KB
