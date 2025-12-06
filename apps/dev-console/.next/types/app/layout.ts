@@ -1,4 +1,4 @@
-// File: /home/ddunnock/projects/ai-typescript-proto/apps/dev-console/src/app/layout.tsx
+// File: /Users/dunnock/projects/ai-typescript-proto/apps/dev-console/src/app/layout.tsx
 import * as entry from '../../../src/app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

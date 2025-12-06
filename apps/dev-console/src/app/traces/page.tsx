@@ -1,6 +1,7 @@
 "use client";
 
 import { useTraceStore, Trace, TraceSpan } from "@/stores/trace-store";
+import { ThinkingInspector } from "@/components/ThinkingInspector";
 import {
     Activity,
     Clock,
@@ -13,14 +14,16 @@ import {
     Cpu,
     Wrench,
     Code2,
+    Radio,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function TracesPage() {
     const {
         traces,
         selectedTraceId,
         selectedSpanId,
+        liveTraceId,
         setSelectedTrace,
         setSelectedSpan,
         clearTraces,
@@ -28,6 +31,17 @@ export default function TracesPage() {
 
     const selectedTrace = traces.find((t) => t.id === selectedTraceId);
     const selectedSpanData = selectedTrace?.spans.find((s) => s.id === selectedSpanId);
+    const liveTrace = traces.find((t) => t.id === liveTraceId);
+
+    // Auto-scroll to new spans when live trace is active
+    useEffect(() => {
+        if (liveTraceId && liveTrace?.spans.length) {
+            const lastSpan = liveTrace.spans[liveTrace.spans.length - 1];
+            if (lastSpan) {
+                setSelectedSpan(lastSpan.id);
+            }
+        }
+    }, [liveTraceId, liveTrace?.spans.length, setSelectedSpan]);
 
     return (
         <div className="flex h-full">
@@ -35,9 +49,17 @@ export default function TracesPage() {
             <div className="w-80 border-r border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex flex-col">
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-2">
-                        <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-                            Traces
-                        </h1>
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                Traces
+                            </h1>
+                            {liveTraceId && (
+                                <span className="flex items-center gap-1 px-2 py-0.5 bg-red-100 dark:bg-red-900/50 text-red-600 dark:text-red-400 rounded-full text-xs font-medium">
+                                    <Radio className="h-3 w-3 animate-pulse" />
+                                    Live
+                                </span>
+                            )}
+                        </div>
                         {traces.length > 0 && (
                             <button
                                 onClick={clearTraces}
@@ -92,10 +114,10 @@ export default function TracesPage() {
                             </div>
                         </div>
 
-                        {/* Span Detail */}
-                        <div className="flex-1 overflow-y-auto">
+                        {/* Span Detail - Using ThinkingInspector for rich tabbed view */}
+                        <div className="flex-1 flex flex-col bg-white dark:bg-gray-800">
                             {selectedSpanData ? (
-                                <SpanDetail span={selectedSpanData} />
+                                <ThinkingInspector span={selectedSpanData} />
                             ) : (
                                 <EmptySpanDetail />
                             )}
@@ -141,11 +163,10 @@ function TraceListItem({
     return (
         <button
             onClick={onClick}
-            className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${
-                isSelected
-                    ? "bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
-            }`}
+            className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-colors ${isSelected
+                ? "bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800"
+                : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
         >
             {statusIcons[trace.status]}
             <div className="flex-1 min-w-0">
@@ -234,11 +255,10 @@ function SpanTreeItem({
     return (
         <button
             onClick={onClick}
-            className={`w-full flex items-center gap-2 p-2 rounded-lg text-left text-sm transition-colors ${
-                isSelected
-                    ? "bg-blue-100 dark:bg-blue-900/50"
-                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
-            }`}
+            className={`w-full flex items-center gap-2 p-2 rounded-lg text-left text-sm transition-colors ${isSelected
+                ? "bg-blue-100 dark:bg-blue-900/50"
+                : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                }`}
         >
             {kindIcons[span.kind]}
             <span className="flex-1 truncate text-gray-900 dark:text-white">

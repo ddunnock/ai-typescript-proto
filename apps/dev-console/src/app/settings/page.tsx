@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { Settings, Key, Server, Palette, Save, CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Settings, Key, Server, Palette, Save, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
 interface ProviderConfig {
     openaiApiKey: string;
     anthropicApiKey: string;
     googleApiKey: string;
     ollamaBaseUrl: string;
+}
+
+interface ProviderInfo {
+    id: string;
+    name: string;
+    configured: boolean;
 }
 
 export default function SettingsPage() {
@@ -19,12 +25,66 @@ export default function SettingsPage() {
     });
     const [saved, setSaved] = useState(false);
     const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
+    const [providers, setProviders] = useState<ProviderInfo[]>([]);
+    const [testingProvider, setTestingProvider] = useState<string | null>(null);
+    const [testResults, setTestResults] = useState<Record<string, { success: boolean; message: string }>>({});
+
+    // Load saved config on mount
+    useEffect(() => {
+        const savedConfig = localStorage.getItem("ai-dev-console-config");
+        if (savedConfig) {
+            try {
+                setConfig(JSON.parse(savedConfig));
+            } catch {
+                // Invalid JSON, ignore
+            }
+        }
+
+        // Fetch provider status
+        fetch("/api/providers")
+            .then(res => res.json())
+            .then(data => setProviders(data.providers ?? []))
+            .catch(console.error);
+    }, []);
 
     const handleSave = () => {
-        // TODO: Persist to localStorage or backend
         localStorage.setItem("ai-dev-console-config", JSON.stringify(config));
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
+    };
+
+    const testProvider = async (providerId: string) => {
+        setTestingProvider(providerId);
+        try {
+            // Get the appropriate API key from config
+            const apiKeyMap: Record<string, string | undefined> = {
+                anthropic: config.anthropicApiKey,
+                openai: config.openaiApiKey,
+                google: config.googleApiKey,
+                local: config.ollamaBaseUrl,
+            };
+
+            const response = await fetch("/api/providers", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    provider: providerId,
+                    apiKey: apiKeyMap[providerId],
+                }),
+            });
+            const result = await response.json();
+            setTestResults(prev => ({
+                ...prev,
+                [providerId]: { success: result.success, message: result.message ?? result.error ?? "Unknown result" },
+            }));
+        } catch (error) {
+            setTestResults(prev => ({
+                ...prev,
+                [providerId]: { success: false, message: error instanceof Error ? error.message : "Test failed" },
+            }));
+        } finally {
+            setTestingProvider(null);
+        }
     };
 
     return (
@@ -137,6 +197,78 @@ export default function SettingsPage() {
                 </div>
             </section>
 
+            {/* Test LLM Connections */}
+            <section className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-orange-100 dark:bg-orange-900/50 rounded-lg">
+                        <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                            Test LLM Connections
+                        </h2>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            Verify your API keys are working by sending a test message
+                        </p>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    {[
+                        { id: "anthropic", name: "Anthropic (Claude)", hasKey: !!config.anthropicApiKey },
+                        { id: "openai", name: "OpenAI (GPT)", hasKey: !!config.openaiApiKey },
+                        { id: "google", name: "Google AI (Gemini)", hasKey: !!config.googleApiKey },
+                        { id: "local", name: "Ollama (Local)", hasKey: true },
+                    ].map((provider) => (
+                        <div
+                            key={provider.id}
+                            className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className="font-medium text-gray-900 dark:text-white">
+                                    {provider.name}
+                                </span>
+                                {testResults[provider.id] && (
+                                    <span
+                                        className={`text-xs px-2 py-0.5 rounded ${testResults[provider.id].success
+                                            ? "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300"
+                                            : "bg-red-100 text-red-700 dark:bg-red-900/50 dark:text-red-300"
+                                            }`}
+                                    >
+                                        {testResults[provider.id].success ? "✓ Working" : "✗ Failed"}
+                                    </span>
+                                )}
+                            </div>
+                            <button
+                                onClick={() => testProvider(provider.id)}
+                                disabled={testingProvider === provider.id || (!provider.hasKey && provider.id !== "local")}
+                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            >
+                                {testingProvider === provider.id ? (
+                                    <>
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                        Testing...
+                                    </>
+                                ) : (
+                                    "Test Connection"
+                                )}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+
+                {Object.entries(testResults).some(([_, result]) => !result.success) && (
+                    <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/30 rounded-lg">
+                        <p className="text-sm text-red-700 dark:text-red-300">
+                            {Object.entries(testResults)
+                                .filter(([_, result]) => !result.success)
+                                .map(([id, result]) => `${id}: ${result.message}`)
+                                .join(", ")}
+                        </p>
+                    </div>
+                )}
+            </section>
+
             {/* Appearance */}
             <section className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
                 <div className="flex items-center gap-3 mb-6">
@@ -162,11 +294,10 @@ export default function SettingsPage() {
                             <button
                                 key={option}
                                 onClick={() => setTheme(option)}
-                                className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${
-                                    theme === option
-                                        ? "bg-blue-600 text-white"
-                                        : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
-                                }`}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${theme === option
+                                    ? "bg-blue-600 text-white"
+                                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                    }`}
                             >
                                 {option}
                             </button>

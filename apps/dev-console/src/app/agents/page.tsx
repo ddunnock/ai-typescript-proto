@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useAgentStore, Agent } from "@/stores/agent-store";
+import { AgentEditDialog } from "@/components/AgentEditDialog";
 import {
     Bot,
     Plus,
@@ -8,7 +10,6 @@ import {
     Square,
     Settings,
     Trash2,
-    AlertCircle,
 } from "lucide-react";
 
 const agentTypeColors = {
@@ -22,20 +23,25 @@ const agentTypeColors = {
 
 export default function AgentsPage() {
     const { agents, addAgent, removeAgent, updateAgent } = useAgentStore();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [editingAgent, setEditingAgent] = useState<Agent | undefined>();
 
-    const createDemoAgent = () => {
-        const demoAgent: Agent = {
-            id: crypto.randomUUID(),
-            name: `Demo Agent ${agents.length + 1}`,
-            type: "orchestrator",
-            description: "A demo orchestrator agent for testing",
-            status: "idle",
-            provider: "anthropic",
-            model: "claude-3-5-sonnet-20241022",
-            tools: ["search", "calculator"],
-            createdAt: new Date(),
-        };
-        addAgent(demoAgent);
+    const handleCreateAgent = () => {
+        setEditingAgent(undefined);
+        setIsDialogOpen(true);
+    };
+
+    const handleEditAgent = (agent: Agent) => {
+        setEditingAgent(agent);
+        setIsDialogOpen(true);
+    };
+
+    const handleSaveAgent = (agent: Agent) => {
+        if (editingAgent) {
+            updateAgent(agent.id, agent);
+        } else {
+            addAgent(agent);
+        }
     };
 
     return (
@@ -50,7 +56,7 @@ export default function AgentsPage() {
                     </p>
                 </div>
                 <button
-                    onClick={createDemoAgent}
+                    onClick={handleCreateAgent}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                     <Plus className="h-4 w-4" />
@@ -59,13 +65,14 @@ export default function AgentsPage() {
             </div>
 
             {agents.length === 0 ? (
-                <EmptyState onCreateAgent={createDemoAgent} />
+                <EmptyState onCreateAgent={handleCreateAgent} />
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {agents.map((agent) => (
                         <AgentCard
                             key={agent.id}
                             agent={agent}
+                            onEdit={() => handleEditAgent(agent)}
                             onRemove={() => removeAgent(agent.id)}
                             onToggle={() =>
                                 updateAgent(agent.id, {
@@ -76,6 +83,14 @@ export default function AgentsPage() {
                     ))}
                 </div>
             )}
+
+            {/* Agent Edit Dialog */}
+            <AgentEditDialog
+                agent={editingAgent}
+                isOpen={isDialogOpen}
+                onClose={() => setIsDialogOpen(false)}
+                onSave={handleSaveAgent}
+            />
         </div>
     );
 }
@@ -106,10 +121,12 @@ function EmptyState({ onCreateAgent }: { onCreateAgent: () => void }) {
 
 function AgentCard({
     agent,
+    onEdit,
     onRemove,
     onToggle,
 }: {
     agent: Agent;
+    onEdit: () => void;
     onRemove: () => void;
     onToggle: () => void;
 }) {
@@ -125,9 +142,8 @@ function AgentCard({
                             {agent.name}
                         </h3>
                         <span
-                            className={`inline-block px-2 py-0.5 text-xs font-medium rounded-full ${
-                                agentTypeColors[agent.type]
-                            }`}
+                            className={`inline-block px-2 py-0.5 text-xs font-medium rounded-full ${agentTypeColors[agent.type]
+                                }`}
                         >
                             {agent.type}
                         </span>
@@ -175,6 +191,7 @@ function AgentCard({
                         )}
                     </button>
                     <button
+                        onClick={onEdit}
                         className="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                         title="Settings"
                     >

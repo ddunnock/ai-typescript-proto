@@ -11,6 +11,13 @@ export interface ToolCall {
     endTime?: number;
 }
 
+export interface ThinkingStep {
+    id: string;
+    content: string;
+    agentType?: string;
+    timestamp: string;
+}
+
 export interface ChatMessage {
     id: string;
     role: "user" | "assistant" | "system" | "tool";
@@ -19,6 +26,7 @@ export interface ChatMessage {
     agentId?: string;
     agentName?: string;
     toolCalls?: ToolCall[];
+    thinkingSteps?: ThinkingStep[];
     isStreaming?: boolean;
     traceId?: string;
 }
@@ -46,6 +54,10 @@ interface ChatStore {
     getSession: (id: string) => ChatSession | undefined;
     getActiveSession: () => ChatSession | undefined;
     clearSession: (id: string) => void;
+    // New methods for thinking and tool tracking
+    addThinkingStep: (sessionId: string, messageId: string, step: Omit<ThinkingStep, "id">) => void;
+    addToolCallToMessage: (sessionId: string, messageId: string, toolCall: ToolCall) => void;
+    updateToolCallInMessage: (sessionId: string, messageId: string, toolName: string, updates: Partial<ToolCall>) => void;
 }
 
 export const useChatStore = create<ChatStore>((set, get) => ({
@@ -83,10 +95,10 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             sessions: state.sessions.map((session) =>
                 session.id === sessionId
                     ? {
-                          ...session,
-                          messages: [...session.messages, message],
-                          updatedAt: new Date(),
-                      }
+                        ...session,
+                        messages: [...session.messages, message],
+                        updatedAt: new Date(),
+                    }
                     : session
             ),
         })),
@@ -96,12 +108,12 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             sessions: state.sessions.map((session) =>
                 session.id === sessionId
                     ? {
-                          ...session,
-                          messages: session.messages.map((msg) =>
-                              msg.id === messageId ? { ...msg, ...updates } : msg
-                          ),
-                          updatedAt: new Date(),
-                      }
+                        ...session,
+                        messages: session.messages.map((msg) =>
+                            msg.id === messageId ? { ...msg, ...updates } : msg
+                        ),
+                        updatedAt: new Date(),
+                    }
                     : session
             ),
         })),
@@ -111,14 +123,14 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             sessions: state.sessions.map((session) =>
                 session.id === sessionId
                     ? {
-                          ...session,
-                          messages: session.messages.map((msg) =>
-                              msg.id === messageId
-                                  ? { ...msg, content: msg.content + content }
-                                  : msg
-                          ),
-                          updatedAt: new Date(),
-                      }
+                        ...session,
+                        messages: session.messages.map((msg) =>
+                            msg.id === messageId
+                                ? { ...msg, content: msg.content + content }
+                                : msg
+                        ),
+                        updatedAt: new Date(),
+                    }
                     : session
             ),
         })),
@@ -140,4 +152,70 @@ export const useChatStore = create<ChatStore>((set, get) => ({
                     : session
             ),
         })),
+
+    addThinkingStep: (sessionId, messageId, step) =>
+        set((state) => ({
+            sessions: state.sessions.map((session) =>
+                session.id === sessionId
+                    ? {
+                        ...session,
+                        messages: session.messages.map((msg) =>
+                            msg.id === messageId
+                                ? {
+                                    ...msg,
+                                    thinkingSteps: [
+                                        ...(msg.thinkingSteps ?? []),
+                                        { ...step, id: crypto.randomUUID() },
+                                    ],
+                                }
+                                : msg
+                        ),
+                        updatedAt: new Date(),
+                    }
+                    : session
+            ),
+        })),
+
+    addToolCallToMessage: (sessionId, messageId, toolCall) =>
+        set((state) => ({
+            sessions: state.sessions.map((session) =>
+                session.id === sessionId
+                    ? {
+                        ...session,
+                        messages: session.messages.map((msg) =>
+                            msg.id === messageId
+                                ? {
+                                    ...msg,
+                                    toolCalls: [...(msg.toolCalls ?? []), toolCall],
+                                }
+                                : msg
+                        ),
+                        updatedAt: new Date(),
+                    }
+                    : session
+            ),
+        })),
+
+    updateToolCallInMessage: (sessionId, messageId, toolName, updates) =>
+        set((state) => ({
+            sessions: state.sessions.map((session) =>
+                session.id === sessionId
+                    ? {
+                        ...session,
+                        messages: session.messages.map((msg) =>
+                            msg.id === messageId
+                                ? {
+                                    ...msg,
+                                    toolCalls: msg.toolCalls?.map((tc) =>
+                                        tc.name === toolName ? { ...tc, ...updates } : tc
+                                    ),
+                                }
+                                : msg
+                        ),
+                        updatedAt: new Date(),
+                    }
+                    : session
+            ),
+        })),
 }));
+

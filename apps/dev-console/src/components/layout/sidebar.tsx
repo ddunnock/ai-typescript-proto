@@ -11,12 +11,14 @@ import {
     Settings,
     ChevronLeft,
     ChevronRight,
+    Sparkles,
 } from "lucide-react";
 import { useState } from "react";
 
 const navigation = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
     { name: "Chat", href: "/chat", icon: MessageSquare },
+    { name: "Playground", href: "/playground", icon: Sparkles },
     { name: "Agents", href: "/agents", icon: Bot },
     { name: "MCP Servers", href: "/mcp", icon: Server },
     { name: "Traces", href: "/traces", icon: Activity },
@@ -29,9 +31,8 @@ export function Sidebar() {
 
     return (
         <div
-            className={`${
-                collapsed ? "w-16" : "w-64"
-            } flex flex-col bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300`}
+            className={`${collapsed ? "w-16" : "w-64"
+                } flex flex-col bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all duration-300`}
         >
             {/* Header */}
             <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
@@ -63,19 +64,17 @@ export function Sidebar() {
                         <Link
                             key={item.name}
                             href={item.href}
-                            className={`${
-                                isActive
+                            className={`${isActive
                                     ? "bg-blue-50 text-blue-600 dark:bg-blue-900/50 dark:text-blue-400"
                                     : "text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
-                            } group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors`}
+                                } group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors`}
                             title={collapsed ? item.name : undefined}
                         >
                             <item.icon
-                                className={`${
-                                    isActive
+                                className={`${isActive
                                         ? "text-blue-600 dark:text-blue-400"
                                         : "text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"
-                                } ${collapsed ? "" : "mr-3"} h-5 w-5 flex-shrink-0`}
+                                    } ${collapsed ? "" : "mr-3"} h-5 w-5 flex-shrink-0`}
                             />
                             {!collapsed && item.name}
                         </Link>
